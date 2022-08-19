@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import styled from '@emotion/styled'
+import IsiLangEditor from '../components/IsilangEditor'
 
 const Body = styled.div`
   box-sizing: border-box;
@@ -33,7 +34,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Body>
-        <RightPanel></RightPanel>
+        <RightPanel>
+
+          <IsiLangEditor></IsiLangEditor>
+        </RightPanel>
 
         <LeftPanel></LeftPanel>
       </Body>
