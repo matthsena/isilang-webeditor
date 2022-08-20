@@ -35,11 +35,13 @@ const Home: NextPage = () => {
       </Head>
       <Body>
         <RightPanel>
-
           <IsiLangEditor></IsiLangEditor>
         </RightPanel>
 
-        <LeftPanel></LeftPanel>
+        <LeftPanel>
+        
+
+        </LeftPanel>
       </Body>
     </div>
   )

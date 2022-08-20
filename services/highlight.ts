@@ -39,12 +39,6 @@ export const generateHighlight = (plainText: string): string => {
                 })
             }
         }
-        // SUBSTITUIÇOES FINAIS
-        // // code = code.replaceAll(//g, "(")
-        // const numberTokens = [...new Set(plainText.match(/[0-9]/gi))]
-        // numberTokens.map((nbToken) => {
-        //     code = code.replaceAll(new RegExp(nbToken, 'g'), spanBuilder(nbToken, "c"))
-        // })
     })
 
     return code;
