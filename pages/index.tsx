@@ -1,8 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import styled from '@emotion/styled'
+import { useContext } from 'react'
 import IsiLangEditor from '../components/IsilangEditor'
 import JavaCodeEditor from '../components/JavaCodeEditor'
+import { CurrentJavaCode } from '../context/JavaCode'
+import httpRequest from '../services/httpRequest'
 
 const Body = styled.div`
   box-sizing: border-box;
@@ -10,9 +13,9 @@ const Body = styled.div`
   margin: 0;
 `
 const Panel = styled.div`
-  top: 0;
+  top: 3rem;
   position: absolute;
-  height: 100vh;
+  height: calc(100vh - 3rem);
   width: 50vw;
   overflow: hidden;
 `
@@ -27,7 +30,48 @@ const LeftPanel = styled(Panel)`
   background: #ddd;
 `
 
+const Navbar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 3rem;
+  background: #394859;
+  z-index: 999;
+`
+
+const RunButton = styled.button`
+  background: #59E340;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  color: #000;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  &:hover {
+    cursor: pointer;
+    background: #95E886;
+  }
+`
+
+
 const Home: NextPage = () => {
+  const { plainText, setJavaCode } = useContext(CurrentJavaCode)
+
+  const generateJavaCode = () => {
+    httpRequest(plainText)
+      .then((res) => {
+        setJavaCode(res)
+      }).catch((error) => {
+        console.error(error)
+      })
+  }
+
   return (
     <div>
       <Head>
@@ -36,6 +80,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Body>
+        <Navbar>
+          <RunButton onClick={generateJavaCode}>
+            Gerar código Java
+          </RunButton>
+        </Navbar>
+
         <RightPanel>
           <IsiLangEditor />
         </RightPanel>

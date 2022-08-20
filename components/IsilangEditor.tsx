@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import styled from "@emotion/styled";
 import { generateHighlight } from '../services/highlight'
-import httpRequest from '../services/httpRequest'
 import { CurrentJavaCode } from '../context/JavaCode'
 
 const EditorInput = styled.textarea`
@@ -41,9 +40,8 @@ const EditorHighlights = styled.div`
 `
 
 export default function IsiLangEditor() {
-    const [plainText, setPlainText] = useState('')
     const [highlightText, setHighlightText] = useState('')
-    const { setJavaCode } = useContext(CurrentJavaCode)
+    const { plainText, setPlainText } = useContext(CurrentJavaCode)
 
     function checkTab(e: any) {
         const value = plainText;
@@ -64,15 +62,6 @@ export default function IsiLangEditor() {
 
         setHighlightText(code)
     }, [plainText])
-
-    const generateJavaCode = () => {
-        httpRequest(plainText)
-            .then((res) => {
-                setJavaCode(res)
-            }).catch((error) => {
-                console.error(error)
-            })
-    }
 
     return (
         <>
