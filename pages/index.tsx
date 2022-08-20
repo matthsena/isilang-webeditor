@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import styled from '@emotion/styled'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import IsiLangEditor from '../components/IsilangEditor'
 import JavaCodeEditor from '../components/JavaCodeEditor'
 import { CurrentJavaCode } from '../context/JavaCode'
@@ -59,16 +59,32 @@ const RunButton = styled.button`
   }
 `
 
+const ErrorPanel = styled.h3`
+  position: fixed;
+  background: #E34234;
+  bottom: 0;
+  left: 2rem;
+  width: calc(100vw - 5rem);
+  z-index: 999;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+`
+
 
 const Home: NextPage = () => {
   const { plainText, setJavaCode } = useContext(CurrentJavaCode)
+  const [currentError, setCurrentError] = useState<string | null>(null)
 
   const generateJavaCode = () => {
     httpRequest(plainText)
       .then((res) => {
         setJavaCode(res)
+        setCurrentError(null)
       }).catch((error) => {
-        console.error(error)
+        setCurrentError(error.message)
       })
   }
 
@@ -93,6 +109,11 @@ const Home: NextPage = () => {
         <LeftPanel>
           <JavaCodeEditor />
         </LeftPanel>
+
+        {currentError && 
+        (<ErrorPanel>
+          {currentError} 
+        </ErrorPanel>)}
       </Body>
     </div>
   )

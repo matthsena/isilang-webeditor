@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { coldarkCold } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-
+import { js as formatCode } from 'js-beautify'
 import { CurrentJavaCode } from '../context/JavaCode'
 import styled from '@emotion/styled';
 
@@ -18,8 +18,8 @@ export default function JavaCodeEditor() {
   const { code } = useContext(CurrentJavaCode)
 
   return (
-    <Highlighter language="java" style={coldarkCold}>
-      {code}
+    <Highlighter language="java" style={coldarkCold} showLineNumbers>
+      {formatCode(code)}
     </Highlighter>
   )
 }
