@@ -58,31 +58,44 @@ const RunButton = styled.button`
     background: #95E886;
   }
 `
-
-const ErrorPanel = styled.h3`
+const AlertMsg = styled.h3`
   position: fixed;
-  background: #E34234;
   bottom: 0;
   left: 2rem;
   width: calc(100vw - 5rem);
   z-index: 999;
   border-radius: 1rem;
   padding: 0.5rem;
-  color: #fff;
   font-family: sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 `
 
+const ErrorMsg = styled(AlertMsg)`
+  background: #E34234;
+  color: #fff;
+`
+
+const WarningMsg = styled(AlertMsg)`
+  background: #E3CB4B;
+  color: #000;
+`
 
 const Home: NextPage = () => {
   const { plainText, setJavaCode } = useContext(CurrentJavaCode)
   const [currentError, setCurrentError] = useState<string | null>(null)
+  const [currentWarning, setCurrentWarning] = useState<string | null>(null)
 
   const generateJavaCode = () => {
     httpRequest(plainText)
       .then((res) => {
-        setJavaCode(res)
+        setJavaCode(res.data)
         setCurrentError(null)
+
+        if (res.warning) {
+          setCurrentWarning(res.warning)
+        } else {
+          setCurrentWarning(null)
+        }
       }).catch((error) => {
         setCurrentError(error.message)
       })
@@ -110,10 +123,15 @@ const Home: NextPage = () => {
           <JavaCodeEditor />
         </LeftPanel>
 
-        {currentError && 
-        (<ErrorPanel>
-          {currentError} 
-        </ErrorPanel>)}
+        {currentError &&
+          (<ErrorMsg>
+            {currentError}
+          </ErrorMsg>)}
+
+          {currentWarning &&
+          (<WarningMsg>
+            {currentWarning}
+          </WarningMsg>)}
       </Body>
     </div>
   )

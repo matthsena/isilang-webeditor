@@ -6,11 +6,16 @@ const options = {
     headers: { 'Content-Type': 'text/plain' },
 };
 
-export default async function httpRequest(plainText: string): Promise<string> {
+type HttpResponse = {
+    data: string
+    warning: string | undefined
+}
+
+export default async function httpRequest(plainText: string): Promise<HttpResponse> {
     if (!plainText) throw new Error("Editor de texto vazio!")
 
     return axios.request({ ...options, data: plainText })
-        .then(({ data }) => data)
+        .then((res) => ({ data: res.data, warning: res.headers?.warning }))
         .catch((error) => {
             throw new Error(error.response.data)
         })
