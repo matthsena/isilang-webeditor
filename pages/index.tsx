@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import styled from '@emotion/styled'
 import IsiLangEditor from '../components/IsilangEditor'
+import JavaCodeEditor from '../components/JavaCodeEditor'
 
 const Body = styled.div`
   box-sizing: border-box;
@@ -13,6 +14,7 @@ const Panel = styled.div`
   position: absolute;
   height: 100vh;
   width: 50vw;
+  overflow: hidden;
 `
 
 const RightPanel = styled(Panel)`
@@ -35,12 +37,11 @@ const Home: NextPage = () => {
       </Head>
       <Body>
         <RightPanel>
-          <IsiLangEditor></IsiLangEditor>
+          <IsiLangEditor />
         </RightPanel>
 
         <LeftPanel>
-        
-
+          <JavaCodeEditor />
         </LeftPanel>
       </Body>
     </div>
