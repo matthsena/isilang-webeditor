@@ -7,7 +7,8 @@ export const COLOR_CLASS = {
 export const HIGHLIGHT_KEYS = [
     {key: 'programa', keyClass: "a"},
     {key: 'fimprog', keyClass: "a"},
-    {key: 'numero', keyClass: "a"},
+    {key: 'inteiro', keyClass: "a"},
+    {key: 'real', keyClass: "a"},
     {key: 'texto', keyClass: "a"},
     {key: 'booleano', keyClass: "a"},
     {key: 'se', keyClass: "a"},
